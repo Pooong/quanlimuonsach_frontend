@@ -9,6 +9,7 @@
                   <div class="col-md-6 col-lg-6 d-flex align-items-center">
                     <div class="card-body p-4 p-lg-4 text-black">
                       <form
+                        method="post"
                         @submit.prevent="register"
                         enctype="multipart/form-data"
                       >
@@ -185,7 +186,7 @@
         formData.append("position", position.value);
         formData.append("address", address.value);
         axios
-        .post("http://localhost:8082/authentication/register/staff", formData)
+        .post("http://localhost:3000/authentication/register/staff", formData)
         .then((res) => {
             if (res.data.error) {
             toast.error(res.data.error);
