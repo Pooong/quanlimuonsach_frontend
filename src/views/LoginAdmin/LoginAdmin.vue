@@ -19,7 +19,7 @@
                         </div>
   
                         <div class="fw-normal pb-2 desLogin">
-                          Bạn đang đăng nhập với quyền Admin !!!
+                          Đăng nhập với quyền Admin
                         </div>
   
                         <div class="group">
@@ -33,7 +33,7 @@
                             v-model="phone"
                             name="phone"
                             autocomplete="off"
-                            placeholder="Nhập số diện thoại"
+                            placeholder="Nhập số điện thoại"
                             required
                             maxlength="10"
                             minlength="9"
@@ -69,9 +69,9 @@
   
                         <a class="small text-muted" href="#!">Quên mật khẩu</a>
                         <p class="mb-1 pb-lg-2" style="color: #393f81">
-                          Bạn chưa có tài khoản?
+                          Đăng ký tài khoản 
                           <router-link to="/admin/register" class="button">
-                            <span style="color: #393f81">Register here</span>
+                            <strong style="color: #393f81">Tại đây</strong>
                           </router-link>
                         </p>
                       </form>
