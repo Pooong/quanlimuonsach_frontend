@@ -1,10 +1,34 @@
 <template>
-    <div class="containPage">
-      <h2>Đơn mượn đã duyệt</h2>
+    <div class="containPage" v-if="isLogin">
+      <div class="d-flex justify-content-between align-items-center">
+        <h2>Đơn mượn đã duyệt</h2>
+        <div class="groundFilter">
+          <select v-model="searchTrangThai" class="filter">
+            <option value="">Trạng thái mượn</option>
+            <option value="W">Chờ nhận</option>
+            <option value="D">Đang mượn</option>
+            <option value="Y">Đã trả</option>
+            <option value="N">Chưa trả</option>
+          </select>
+          <button class="btn-filter" @click="searchDocGia">Lọc</button>
+        </div>
+        <div class="search">
+          <input
+            class="inputSearch"
+            v-model="searchQuery"
+            type="search"
+            placeholder="Tìm kiếm đọc giả"
+            aria-label="Search"
+          />
+          <span @click="searchDocGia" class="iconSearch"
+            ><i class="fa-solid fa-magnifying-glass"></i
+          ></span>
+        </div>
+      </div>
       <div class="contentPage" :style="`${isLogin ? '' : 'display: none'}`">
         <div class="list-group">
           <div v-if="dataRented.length === 0" class="orderEmpty">
-            <p>Chưa có đơn mượn</p>
+            <p>Đơn mượn trống</p>
           </div>
           <div
             v-for="(rented, index) in dataRented"
@@ -27,10 +51,7 @@
                       <a-menu>
                         <a-menu-item>
                           <a @click="showModal(rented)"
-                            ><i
-                              class="fa-solid fa-circle-info"
-                              style="color: blue"
-                            ></i
+                            ><i class="fa-solid fa-pen" style="color: blue"></i
                           ></a>
                         </a-menu-item>
                         <a-menu-item>
@@ -53,7 +74,7 @@
               <p class="ml-3 d-inline">Địa chỉ: {{ rented.MaDocGia.DiaChi }}</p>
             </div>
             <div class="d-flex">
-              <h5>Chi tiết đơn mượn:</h5>
+              <h5 style="font-size: 1.2rem">Chi tiết đơn mượn:</h5>
               <a-modal
                 style="top: 40px"
                 v-model:open="isModalDelete"
@@ -69,41 +90,30 @@
               <a-modal
                 style="top: 40px"
                 v-model:open="isModal"
-                width="800px"
-                title="Chi tiết đơn mượn"
-                @ok="handleOk"
-                @cancel="handleCancel"
+                width="500px"
+                title="Cập nhật trạng thái mượn"
+                @ok="handleOkUpdateTraSach"
+                @cancel="handleCancelUpdate"
+                :ok-button-props="okButtonAccess"
                 cancelText="Đóng"
-                :ok-button-props="okButtonHidden"
+                okText="Xác nhận"
               >
-                <!-- <table class="table text-center">
-                  <thead>
-                    <tr class="table-borderless">
-                      <th scope="col">STT</th>
-                      <th scope="col">Tên sách</th>
-                      <th scope="col">Số lượng</th>
-                      <th scope="col">Giá mượn</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="(detail, index) in dataDetail." :key="detail._id">
-                      <td>{{ index + 1 }}</td>
-                      <td>{{ detail.MSHH[0].TenHH }}</td>
-                      <td>
-                        <div class="numberCup">
-                          <p class="ml-1 mr-1 mb-0">{{ detail.SoLuong }}</p>
-                        </div>
-                      </td>
-                      <td>
-                        {{
-                          (detail.MSHH[0].Gia * detail.SoLuong).toLocaleString(
-                            "vi-VN"
-                          )
-                        }}VND
-                      </td>
-                    </tr>
-                  </tbody>
-                </table> -->
+                <select v-model="selectedValue" class="select-options">
+                  <option value="">Chọn trạng thái mượn sách</option>
+                  <option value="W">Chờ nhận</option>
+                  <option value="D">Đang mượn</option>
+                  <option value="Y">Đã trả</option>
+                  <option value="N">Chưa trả</option>
+                </select>
+                <div
+                  :style="`${
+                    errorStatus
+                      ? 'margin-top: 8px; color: red; font-size: 1rem'
+                      : 'display: none'
+                  }`"
+                >
+                  {{ errorStatus }}
+                </div>
               </a-modal>
             </div>
             <table class="table text-center">
@@ -112,7 +122,7 @@
                   <th scope="col">Tên sách</th>
                   <th scope="col">Số lượng</th>
                   <th scope="col">Đơn giá/ngày</th>
-                  <th scope="col">Trạng thái</th>
+                  <th scope="col">Trạng thái mượn</th>
                 </tr>
               </thead>
               <tbody>
@@ -120,8 +130,30 @@
                   <td>{{ rented.MaSach.TenSach }}</td>
                   <td>{{ rented.SoLuong }}</td>
                   <td>{{ rented.MaSach.DonGia }} VND</td>
-                  <td>
-                    {{ rented.TraSach === "Y" ? "Đã trả sách" : "Đang mượn" }}
+                  <td
+                    :style="`${
+                      rented.TraSach === 'Y'
+                        ? 'color: green; font-weight: bold;'
+                        : rented.TraSach === 'N'
+                        ? 'color: red; font-weight: bold;'
+                        : rented.TraSach === 'W'
+                        ? 'color: blue; font-weight: bold;'
+                        : rented.TraSach === 'D'
+                        ? 'color: orange; font-weight: bold;'
+                        : 'color: black; font-weight: bold;'
+                    }`"
+                  >
+                    {{
+                      rented.TraSach === "Y"
+                        ? "Đã trả"
+                        : rented.TraSach === "N"
+                        ? "Chưa trả"
+                        : rented.TraSach === "W"
+                        ? "Chờ nhận"
+                        : rented.TraSach === "D"
+                        ? "Đang mượn"
+                        : "Không có"
+                    }}
                   </td>
                 </tr>
               </tbody>
@@ -130,7 +162,9 @@
               <div>
                 <p>
                   Thành tiền:
-                  <span style="color: #d50d0d">{{ rented.ThanhTien }} VND</span>
+                  <span style="color: #d50d0d; font-weight: bold"
+                    >{{ rented.ThanhTien }} VND</span
+                  >
                 </p>
                 <p class="d-inline">
                   Ngày mượn sách: {{ formatDateTime(rented.NgayMuon) }}
@@ -151,6 +185,9 @@
         </div>
       </div>
     </div>
+    <div v-else class="denied">
+      <h3 class="text-center mt-5">Vui lòng đăng nhập để xử dụng dịch vụ</h3>
+    </div>
   </template>
   
   <script setup>
@@ -158,50 +195,93 @@
   import axios from "axios";
   import { toast } from "vue3-toastify";
   import moment from "moment";
+  
   const dataRented = ref([]);
   const isLogin = localStorage.getItem("isLogin");
+  const selectedValue = ref("");
+  const errorStatus = ref("");
+  const searchQuery = ref("");
+  const searchTrangThai = ref("");
+  
   const fetchData = () => {
     axios
-      .get("http://localhost:8082/rent")
+      .get("http://localhost:3000/rent")
       .then((res) => {
         dataRented.value = res.data.filter((item) => item.TrangThai !== "W");
       })
       .catch((err) => console.log(err));
   };
   fetchData();
+  
+  const searchDocGia = () => {
+    axios
+      .get(
+        `http://localhost:3000/rent/filter-TenSach?tenDocGia=${searchQuery.value}&traSach=${searchTrangThai.value}`
+      )
+      .then((res) => {
+        if (res.data.length > 0) {
+          dataRented.value = res.data.filter((item) => item.TrangThai !== "W");
+        } else {
+          dataRented.value = [];
+        }
+      })
+      .catch((error) => {
+        console.error("Lỗi khi nhận dữ liệu từ API", error);
+      });
+  };
+  
   const formatDateTime = (dateTime) => {
     return moment(dateTime).format("DD-MM-YYYY HH:mm:ss");
   };
-  const dataDetail = ref([]);
-  const numberDetail = ref(0);
+  
   const isModal = ref(false);
   const showModal = (order) => {
     isModal.value = true;
-    dataDetail.value = order;
+    idOrder.value = order._id;
   };
-  const handleCancel = () => {
+  
+  const handleCancelUpdate = () => {
     isModal.value = false;
+    errorStatus.value = "";
+    selectedValue.value = "";
   };
-  const handleOk = () => {
-    isModal.value = false;
+  
+  const handleOkUpdateTraSach = () => {
+    if (selectedValue.value === "") {
+      errorStatus.value = "Vui lòng chọn trạng thái mượn sách.";
+    } else {
+      axios
+        .put("http://localhost:3000/rent/" + idOrder.value, {
+          traSach: selectedValue.value,
+        })
+        .then((res) => {
+          if (res.data.error) {
+            toast.error(res.data.error);
+          } else {
+            handleCancelUpdate();
+            fetchData();
+            toast.success("Đã cập nhật trạng thái mượn thành công.");
+          }
+        })
+        .catch((err) => console.log(err));
+    }
   };
-  const handleSelectDetail = (detail) => {
-    console.log("Chi tiet detail", detail);
-    numberDetail.value = detail.SoLuong;
-    console.log("So Luong", numberDetail.value);
-  };
+  
   const isModalDelete = ref(false);
   const idOrder = ref("");
+  
   const showModalDelete = (order) => {
     isModalDelete.value = true;
     idOrder.value = order._id;
   };
+  
   const handleCancelDelete = () => {
     isModalDelete.value = false;
   };
+  
   const handleOkDelete = () => {
     axios
-      .delete("http://localhost:8082/rent/" + idOrder.value)
+      .delete("http://localhost:3000/rent/" + idOrder.value)
       .then((res) => {
         if (res.data.error) {
           toast.error(res.data.error);
@@ -213,14 +293,16 @@
       })
       .catch((err) => console.log(err));
   };
+  
   const okButtonProps = {
     style: {
       background: "red", // Đặt màu đỏ cho nút "OK"
     },
   };
-  const okButtonHidden = {
+  
+  const okButtonAccess = {
     style: {
-      display: "none",
+      background: "rgb(8, 172, 8)",
     },
   };
   </script>
