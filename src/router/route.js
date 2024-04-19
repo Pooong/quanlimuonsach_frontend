@@ -12,6 +12,7 @@ import AboutAdmin from "@/views/AboutAdmin/AboutAdmin.vue";
 import InfoAdmin from "@/views/InfoAdmin/InfoAdmin.vue";
 import EditProfileAdmin from "@/views/EditProfileAdmin/EditProfileAdmin.vue";
 import Customer from "@/views/Customer/Customer.vue";
+import HistoryAdmin from "@/views/HistoryAdmin/HistoryAdmin.vue";
 const routes = [
   // router Admin
   {
@@ -69,6 +70,13 @@ const routes = [
     path: "/admin/customer",
 
     component: Customer,
+    meta: {
+      layout: AdminLayout,
+    },
+  },
+  {
+    path: "/admin/history",
+    component: HistoryAdmin,
     meta: {
       layout: AdminLayout,
     },
