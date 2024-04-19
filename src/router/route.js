@@ -12,7 +12,9 @@ import AboutAdmin from "@/views/AboutAdmin/AboutAdmin.vue";
 import InfoAdmin from "@/views/InfoAdmin/InfoAdmin.vue";
 import EditProfileAdmin from "@/views/EditProfileAdmin/EditProfileAdmin.vue";
 import Customer from "@/views/Customer/Customer.vue";
+import DefaultLayout from "@/Layouts/DefaultLayout/DefaultLayout.vue";
 import HistoryAdmin from "@/views/HistoryAdmin/HistoryAdmin.vue";
+import Home from "@/views/User/Home/Home.vue";
 const routes = [
   // router Admin
   {
@@ -79,6 +81,14 @@ const routes = [
     component: HistoryAdmin,
     meta: {
       layout: AdminLayout,
+    },
+  },
+  //route user 
+  {
+    path: "/",
+    component: Home,
+    meta: {
+      layout: DefaultLayout,
     },
   },
 ];
