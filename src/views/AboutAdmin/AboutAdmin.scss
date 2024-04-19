@@ -118,13 +118,12 @@
   
     .btnAddImage {
       margin-top: 20px;
-  
       label {
         padding: 10px 15px;
         margin: auto;
         font-size: 16px;
         border-radius: 10px;
-        background-color: var(--orange);
+        background-color: var(--blue);
         color: #fff;
   
         .iconModal {
@@ -138,6 +137,9 @@
         display: none;
       }
     }
+    :hover{
+      cursor: pointer;
+    }
   }
   
   .rightModal {
@@ -146,10 +148,13 @@
       grid-template-columns: 94px auto;
       padding: 5px 10px;
       border-radius: 10px;
-      background-color: rgba(255, 166, 0, 0.499);
+      background-color: #fff;
       color: #141a46;
       margin: 10px;
-  
+      border-bottom: 1px solid #000;
+      select{
+        border: none;
+      }
       span {
         margin: 5px 0px;
       }
