@@ -14,12 +14,15 @@
 }
 
 .cardInfo {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   grid-template-columns: 80px auto;
   padding: 10px;
   border: 1px solid rgba(255, 255, 255, 0.574);
-  height: 100px;
-  width: 200px;
+  height: 200px;
+  width: 150px;
   margin: 10px auto;
   border-radius: 10px;
   transition: 0.2s;
@@ -38,7 +41,7 @@
 
   .iconCard {
       border-radius: 50%;
-      font-size: 26px;
+      font-size: 20px;
       color: #000;
       background-color: #fff;
       width: 50px;
@@ -53,13 +56,14 @@
   margin: auto 0px auto 2px;
 
   .numberCard {
+      text-align: center;
       font-size: 24px;
       font-weight: bold;
       color: #000;
   }
 
   .nameCard {
-      font-size: 20px;
+      font-size: 15px;
       color: #000;
   }
 }
