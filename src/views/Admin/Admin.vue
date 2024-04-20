@@ -8,7 +8,7 @@
             <div class="cardInfo">
               <div class="leftCard">
                 <div class="iconCard">
-                  <i class="fa fa-cart-arrow-down"></i>
+                  <i class="fa-solid fa-cart-shopping"></i>
                 </div>
               </div>
               <div class="rightCard">
@@ -154,121 +154,119 @@
   </div>
 </template>
 
-
 <script setup>
-  import { ref } from "vue";
-  import axios from "axios";
-  import { toast } from "vue3-toastify";
-  import moment from "moment";
+import { ref } from "vue";
+import axios from "axios";
+import { toast } from "vue3-toastify";
+import moment from "moment";
 
-  const listRents = ref([]);
-  const totalCustomer = ref("");
-  const totalOrder = ref("");
-  const totalDenied = ref("");
-  const totalPending = ref("");
-  const totalStaff = ref("");
-  const isModalAccess = ref(false);
-  const isModalDeny = ref(false);
-  const isLogin = localStorage.getItem("isLogin");
-  const rentChoice = ref(null);
-  const indexSelected = ref(null);
+const listRents = ref([]);
+const totalCustomer = ref("");
+const totalOrder = ref("");
+const totalDenied = ref("");
+const totalPending = ref("");
+const totalStaff = ref("");
+const isModalAccess = ref(false);
+const isModalDeny = ref(false);
+const isLogin = localStorage.getItem("isLogin");
+const rentChoice = ref(null);
+const indexSelected = ref(null);
 
-  const showModalAccess = (rent, index) => {
-    isModalAccess.value = true;
-    rentChoice.value = rent;
-    indexSelected.value = index;
-  };
-  const showModalDeny = (rent) => {
-    isModalDeny.value = true;
-    rentChoice.value = rent;
-  };
-  const handleCancelAccess = () => {
-    isModalAccess.value = false;
-  };
-  const handleCancelDeny = () => {
-    isModalDeny.value = false;
-  };
+const showModalAccess = (rent, index) => {
+  isModalAccess.value = true;
+  rentChoice.value = rent;
+  indexSelected.value = index;
+};
+const showModalDeny = (rent) => {
+  isModalDeny.value = true;
+  rentChoice.value = rent;
+};
+const handleCancelAccess = () => {
+  isModalAccess.value = false;
+};
+const handleCancelDeny = () => {
+  isModalDeny.value = false;
+};
 
-  const fetchData = () => {
-    axios
-      .get("http://localhost:3000/rent?trangThai=W")
-      .then((res) => {
-        listRents.value = res.data;
-      })
-      .catch((err) => console.log(err));
-  };
-  fetchData();
+const fetchData = () => {
+  axios
+    .get("http://localhost:3000/rent?trangThai=W")
+    .then((res) => {
+      listRents.value = res.data;
+    })
+    .catch((err) => console.log(err));
+};
+fetchData();
 
-  const dashBoard = () => {
-    axios
-      .get("http://localhost:3000/reader/dashboard")
-      .then((res) => {
-        totalCustomer.value = res.data.user;
-        totalStaff.value = res.data.staff;
-        totalOrder.value = res.data.rent.length;
-        totalDenied.value = res.data.rentDenied.length;
-        totalPending.value = res.data.rentWaiting.length;
-      })
-      .catch((err) => console.log(err));
-  };
-  dashBoard();
+const dashBoard = () => {
+  axios
+    .get("http://localhost:3000/customer/dashboard")
+    .then((res) => {
+      totalCustomer.value = res.data.user;
+      totalStaff.value = res.data.staff;
+      totalOrder.value = res.data.rent.length;
+      totalDenied.value = res.data.rentDenied.length;
+      totalPending.value = res.data.rentWaiting.length;
+    })
+    .catch((err) => console.log(err));
+};
+dashBoard();
 
-  const formatDateTime = (dateTime) => {
-    return moment(dateTime).format("DD-MM-YYYY HH:mm:ss");
-  };
+const formatDateTime = (dateTime) => {
+  return moment(dateTime).format("DD-MM-YYYY HH:mm:ss");
+};
 
-  const handleOkAccess = () => {
-    console.log(rentChoice.value._id);
-    axios
-      .put("http://localhost:3000/rent/" + rentChoice.value._id, {
-        trangThai: "A",
-        traSach: "W",
-      })
-      .then((res) => {
-        console.log(res);
-        if (res.data.error) {
-          toast.error(res.data.error);
-        } else {
-          handleCancelAccess();
-          fetchData();
-          dashBoard();
-          toast.success("Đã duyệt đơn mượn thành công.");
-        }
-      })
-      .catch((err) => console.log(err));
-  };
+const handleOkAccess = () => {
+  console.log(rentChoice.value._id);
+  axios
+    .put("http://localhost:3000/rent/" + rentChoice.value._id, {
+      trangThai: "A",
+      traSach: "W",
+    })
+    .then((res) => {
+      console.log(res);
+      if (res.data.error) {
+        toast.error(res.data.error);
+      } else {
+        handleCancelAccess();
+        fetchData();
+        dashBoard();
+        toast.success("Đã duyệt đơn mượn thành công.");
+      }
+    })
+    .catch((err) => console.log(err));
+};
 
-  const handleOkDeny = () => {
-    axios
-      .put("http://localhost:3000/rent/" + rentChoice.value._id, {
-        trangThai: "D",
-      })
-      .then((res) => {
-        if (res.data.error) {
-          toast.error(res.data.error);
-        } else {
-          handleCancelDeny();
-          fetchData();
-          dashBoard();
-          toast.success("Đã từ chối đơn mượn thành công.");
-        }
-      })
-      .catch((err) => console.log(err));
-  };
+const handleOkDeny = () => {
+  axios
+    .put("http://localhost:3000/rent/" + rentChoice.value._id, {
+      trangThai: "D",
+    })
+    .then((res) => {
+      if (res.data.error) {
+        toast.error(res.data.error);
+      } else {
+        handleCancelDeny();
+        fetchData();
+        dashBoard();
+        toast.success("Đã từ chối đơn mượn thành công.");
+      }
+    })
+    .catch((err) => console.log(err));
+};
 
-  const okButtonDeny = {
-    style: {
-      background: "red",
-    },
-  };
+const okButtonDeny = {
+  style: {
+    background: "red",
+  },
+};
 
-  const okButtonAccess = {
-    style: {
-      background: "rgb(8, 172, 8)",
-    },
-  };
+const okButtonAccess = {
+  style: {
+    background: "rgb(8, 172, 8)",
+  },
+};
 </script>
-
 <style lang="scss" scoped>
-  @import "./Admin.scss";
+@import "./Admin.scss";
 </style>
