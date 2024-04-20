@@ -134,13 +134,13 @@
     margin: auto;
   }
 
-.toggle{
+.wrapper{
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #000;
+    background: linear-gradient(to left, #96c93d, #00b09b);
     border-radius: 100% 0 100% 0;
     div{
         transition: opacity 0.3s ease-in-out;

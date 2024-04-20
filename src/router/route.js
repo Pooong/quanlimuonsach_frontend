@@ -14,9 +14,11 @@ import EditProfileAdmin from "@/views/EditProfileAdmin/EditProfileAdmin.vue";
 import Customer from "@/views/Customer/Customer.vue";
 import DefaultLayout from "@/Layouts/DefaultLayout/DefaultLayout.vue";
 import HistoryAdmin from "@/views/HistoryAdmin/HistoryAdmin.vue";
+import AuthLayoutAdmin from "@/Layouts/AuthLayoutAdmin/AuthLayoutAdmin.vue";
 // import user
 import Home from "@/views/User/Home/Home.vue";
 import Login from "@/views/User/Login/Login.vue";
+import Register from "@/views/User/Register/Register.vue";
 const routes = [
   // router Admin
   {
@@ -96,6 +98,13 @@ const routes = [
   {
     path: "/login",
     component: Login,
+    meta: {
+      layout: AuthLayout,
+    },
+  },
+  {
+    path: "/register",
+    component: Register,
     meta: {
       layout: AuthLayout,
     },

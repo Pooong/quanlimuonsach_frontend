@@ -70,10 +70,6 @@
   const router = useRouter();
   const isLogin = localStorage.getItem("isLogin");
   const is_expanded = ref(localStorage.getItem("is_expanded") === "true");
-  const ToggleMenu = () => {
-    is_expanded.value = !is_expanded.value;
-    localStorage.setItem("is_expanded", is_expanded.value);
-  };
   // Modal andt vue
   const isModal = ref(false);
   const okButtonProps = {
@@ -85,7 +81,7 @@
     isModal.value = true;
   };
   const handleOk = () => {
-    localStorage.removeItem("isLogin");
+    localStorage.removeItem("isLoginDG");
     localStorage.removeItem("Avatar");
     localStorage.removeItem("ID_User");
     localStorage.removeItem("Username");

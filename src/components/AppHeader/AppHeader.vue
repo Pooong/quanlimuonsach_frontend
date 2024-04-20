@@ -32,11 +32,11 @@
   
   <script setup>
   const isUserLoggedIn = () => {
-    return localStorage.getItem("isLogin") === "true";
+    return localStorage.getItem("isLoginDG") === "true";
   };
-  const username = localStorage.getItem("Username");
-  const avatar = localStorage.getItem("Avatar");
-  const imageUser = `http://localhost:8082/${avatar}`;
+  const username = localStorage.getItem("TenDG");
+  const avatar = localStorage.getItem("AvatarDG");
+  const imageUser = `http://localhost:3000/${avatar}`;
   </script>
   
   <style lang="scss" scoped>

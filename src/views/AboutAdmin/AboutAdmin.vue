@@ -54,7 +54,7 @@
               </div>
               <div class="dataItem">
                 <span class="title">Nhà xuất bản:</span>
-                <span class="content"> {{ item.MaNxb.TenNxb }}</span>
+                <span class="content">{{ item.MaNxb ? item.MaNxb.TenNxb : 'N/A' }}</span>
               </div>
             </div>
             <div class="actionItem">
@@ -341,6 +341,11 @@ const fetchData = () => {
     .get("http://localhost:3000/book")
     .then((res) => {
       data.value = res.data;
+
+      console.log("check data", res.data)
+
+
+
     })
     .catch((err) => console.log(err));
 };
@@ -422,11 +427,12 @@ const handleOk = () => {
   if (isValid) {
     const formData = new FormData();
     formData.append("image", image.value);
-    formData.append("tenSach", tenSach.value);
-    formData.append("donGia", donGia.value);
-    formData.append("soQuyen", soQuyen.value);
-    formData.append("namXuatBan", namXuatBan.value);
-    formData.append("idNxb", idNxb.value);
+    formData.append("TenSach", tenSach.value);
+    formData.append("DonGia", donGia.value);
+    formData.append("SoQuyen", soQuyen.value);
+    formData.append("NamXuatBan", namXuatBan.value);
+    formData.append("MaNxb", idNxb.value);
+    console.log("check form: ",formData)
     axios
       .post("http://localhost:3000/book", formData)
       .then((res) => {
