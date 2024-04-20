@@ -4,7 +4,7 @@ aside {
     background-color: #07f4c4;
     color: #07f4c4;
     width: calc(2rem + 32px);
-    overflow: hidden;
+    // overflow: hidden;
     padding: 1rem;
     transition: 0.2s ease-in-out;
 
@@ -30,32 +30,7 @@ aside {
       }
     }
   
-    .menu-toggle-wrap {
-      display: flex;
-      justify-content: flex-end;
-      // margin-bottom: 1rem;
-  
-      position: relative;
-      top: 0;
-      transition: 0.2s ease-in-out;
-  
-      .menu-toggle {
-        transition: 0.2s ease-in-out;
-  
-        .material-icons {
-          font-size: 2rem;
-          color: #07f4c4;
-          transition: 0.2s ease-out;
-        }
-  
-        &:hover {
-          .material-icons {
-            color: var(--primary);
-            transform: translateX(0.5rem);
-          }
-        }
-      }
-    }
+    
   
     h3,
     .button .text {
@@ -157,6 +132,7 @@ aside {
   
       .titleWeb {
         opacity: 1;
+        color: #eee;
       }
   
       .button {
@@ -171,6 +147,32 @@ aside {
   
       .footer {
         opacity: 0;
+      }
+    }
+  }
+  .menu-toggle-wrap {
+    display: flex;
+    justify-content: flex-end;
+    // margin-bottom: 1rem;
+
+    position: relative;
+    top: 0;
+    transition: 0.2s ease-in-out;
+
+    .menu-toggle {
+      transition: 0.2s ease-in-out;
+      color: #000;
+      .material-icons {
+        font-size: 2rem;
+        color: #000;
+        transition: 0.2s ease-out;
+      }
+
+      &:hover {
+        .material-icons {
+          color: #000;
+          transform: translateX(0.5rem);
+        }
       }
     }
   }

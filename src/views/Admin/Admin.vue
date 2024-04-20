@@ -200,7 +200,7 @@ fetchData();
 
 const dashBoard = () => {
   axios
-    .get("http://localhost:3000/customer/dashboard")
+    .get("http://localhost:3000/reader/dashboard")
     .then((res) => {
       totalCustomer.value = res.data.user;
       totalStaff.value = res.data.staff;

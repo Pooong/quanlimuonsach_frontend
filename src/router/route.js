@@ -22,6 +22,7 @@ import Login from "@/views/User/Login/Login.vue";
 import Register from "@/views/User/Register/Register.vue";
 import Profile from "@/views/User/Profile/Profile.vue";
 import EditProfile from "@/views/User/EditProfile/EditProfile.vue";
+import Order from "@/views/User/Order/Order.vue";
 const routes = [
   // router Admin
   {
@@ -129,6 +130,13 @@ const routes = [
   {
     path: "/editprofile",
     component: EditProfile,
+    meta: {
+      layout: DefaultLayout,
+    },
+  },
+  {
+    path: "/order",
+    component: Order,
     meta: {
       layout: DefaultLayout,
     },

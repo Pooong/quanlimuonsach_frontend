@@ -5,9 +5,16 @@
       <span class="titleWeb">F<span class="text-dark">BOOKS</span></span>
     </div>
 
+    <div class="menu-toggle-wrap">
+      <button class="menu-toggle" @click="ToggleMenu">
+        <span class="material-icons"
+          ><i class="fa-solid fa-angles-right fa-xs"></i
+        ></span>
+      </button>
+    </div>
+
     <h3>Menu</h3>
     <div class="menu">
-      
       <router-link to="/" class="button">
         <span class="material-icons"
           ><i class="fa-solid fa-house icon"></i
@@ -25,10 +32,6 @@
           ><i class="fa-solid fa-bookmark icon"></i
         ></span>
         <span class="text">Oders</span>
-      </router-link>
-      <router-link to="/history" class="button">
-        <span class="material-icons"><i class="fa-solid fa-clock"></i></span>
-        <span class="text">History</span>
       </router-link>
       <router-link v-if="isLogin" to="/profile" class="button">
         <span class="material-icons"><i class="fa-solid fa-user"></i></span>
@@ -63,41 +66,53 @@
 </template>
 
 <script setup>
-import { ref, watchEffect, onMounted } from "vue";
+import { ref } from "vue";
 import logoURL from "../../assets/logoBook.png";
-import { Modal, Button } from "ant-design-vue";
+import { Button } from "ant-design-vue";
 import { useRouter } from "vue-router";
-import axios from "axios";
+
 const router = useRouter();
-const isLogin = localStorage.getItem("isLogin");
+
+const isLogin = localStorage.getItem("isLoginDG");
 const is_expanded = ref(localStorage.getItem("is_expanded") === "true");
+
 const ToggleMenu = () => {
   is_expanded.value = !is_expanded.value;
   localStorage.setItem("is_expanded", is_expanded.value);
 };
+
 // Modal andt vue
 const isModal = ref(false);
+
 const okButtonProps = {
   style: {
     background: "red", // Đặt màu đỏ cho nút "OK"
   },
 };
+
 const showModal = () => {
   isModal.value = true;
 };
+
 const handleOk = () => {
-  localStorage.removeItem("isLogin");
-  localStorage.removeItem("Avatar");
-  localStorage.removeItem("ID_User");
-  localStorage.removeItem("Username");
+  localStorage.removeItem("ID_DG");
+  localStorage.removeItem("TenDG");
+  localStorage.removeItem("AvatarDG");
+  localStorage.removeItem("DiaChiDG");
+  localStorage.removeItem("NgaySinhDG");
+  localStorage.removeItem("DienThoaiDG");
+  localStorage.removeItem("isLoginDG");
   isModal.value = false;
   router.push("/login");
 };
+
 const handleCancel = () => {
   isModal.value = false;
 };
+
 // const ID_User = localStorage.getItem('ID_User');
 // const gioHang = ref([]);
+
 // const capNhatGioHang = () => {
 //     axios.get('http://localhost:3000/cart/' + ID_User)
 //         .then(res => {
@@ -105,9 +120,11 @@ const handleCancel = () => {
 //             gioHang.value = res.data
 //         })
 // }
+
 // onMounted(() => {
 //     capNhatGioHang();
 // });
+
 // watchEffect(() => {
 //     const tongSoLuong = gioHang.value.reduce((total, item) => total + item.SoLuong, 0);
 //     console.log('Tổng số lượng trong giỏ hàng:', tongSoLuong);
