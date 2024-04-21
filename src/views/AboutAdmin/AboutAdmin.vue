@@ -54,7 +54,7 @@
               </div>
               <div class="dataItem">
                 <span class="title">Nhà xuất bản:</span>
-                <span class="content"> {{ item.MaNxb.TenNxb }}</span>
+                <span class="content"> {{ item.MaNxb ? item.MaNxb.TenNxb : '' }}</span>
               </div>
             </div>
             <div class="actionItem">
@@ -422,11 +422,12 @@ const handleOk = () => {
   if (isValid) {
     const formData = new FormData();
     formData.append("image", image.value);
-    formData.append("tenSach", tenSach.value);
-    formData.append("donGia", donGia.value);
-    formData.append("soQuyen", soQuyen.value);
-    formData.append("namXuatBan", namXuatBan.value);
-    formData.append("idNxb", idNxb.value);
+    formData.append("TenSach", tenSach.value);
+    formData.append("DonGia", donGia.value);
+    formData.append("SoQuyen", soQuyen.value);
+    formData.append("NamXuatBan", namXuatBan.value);
+    formData.append("MaNxb", idNxb.value);
+    console.log("check form: ",formData)
     axios
       .post("http://localhost:3000/book", formData)
       .then((res) => {
@@ -453,7 +454,7 @@ const imageUpload = ref("../../public/imageIcon.jpg");
 const handleImage = (e) => {
   if (e.target.files && e.target.files[0]) {
     imageUpload.value = URL.createObjectURL(e.target.files[0]);
-    image.value = e.target.files[0];
+    image.value = e.target.files[0]; 
   }
 };
 
@@ -485,11 +486,11 @@ const handleOkEdit = () => {
   isModalEdit.value = false;
   const formData = new FormData();
   formData.append("image", imageUpdate.value);
-  formData.append("tenSach", selectedItem.value.TenSach);
-  formData.append("donGia", selectedItem.value.DonGia);
-  formData.append("soQuyen", selectedItem.value.SoQuyen);
-  formData.append("namXuatBan", selectedItem.value.NamXuatBan);
-  formData.append("idNxb", selectedItem.value.MaNxb._id);
+  formData.append("TenSach", selectedItem.value.TenSach);
+  formData.append("DonGia", selectedItem.value.DonGia);
+  formData.append("SoQuyen", selectedItem.value.SoQuyen);
+  formData.append("NamXuatBan", selectedItem.value.NamXuatBan);
+  formData.append("MaNxb", selectedItem.value.MaNxb._id);
   axios
     .put("http://localhost:3000/book/" + selectedItem.value._id, formData)
     .then((res) => {

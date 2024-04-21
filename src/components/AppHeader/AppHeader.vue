@@ -35,8 +35,8 @@
     return localStorage.getItem("isLoginDG") === "true";
   };
   const username = localStorage.getItem("TenDG");
-  const avatar = localStorage.getItem("AvatarDG");
-  const imageUser = `http://localhost:3000/${avatar}`;
+  const Avatar = localStorage.getItem("AvatarDG");
+  const imageUser = `http://localhost:3000/${Avatar}`;
   </script>
   
   <style lang="scss" scoped>

@@ -45,7 +45,7 @@
                 </div>
                 <div class="dataItem">
                   <span class="title">Nhà xuất bản:</span>
-                  <span class="content"> {{ item.MaNxb.TenNxb }}</span>
+                  <span class="content"> {{ item.MaNxb ? item.MaNxb.TenNxb : '' }}</span>
                 </div>
               </div>
               <div class="actionItem">
@@ -237,6 +237,7 @@
       .get("http://localhost:3000/book")
       .then((res) => {
         data.value = res.data;
+        console.log(data.value)
         data.value = res.data.map((item) => ({
           ...item,
           SoLuong: 0,

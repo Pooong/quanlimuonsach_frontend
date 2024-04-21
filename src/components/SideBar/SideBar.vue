@@ -23,14 +23,12 @@
       </router-link>
       <router-link to="/about" class="button">
         <span class="material-icons"
-          ><i class="fa-solid fa-bell-concierge"></i
-        ></span>
-        <span class="text">Menu</span>
+          ><i class="fa-solid fa-book-tanakh"></i></span>
+        <span class="text">List Book</span>
       </router-link>
       <router-link to="/order" class="button">
         <span class="material-icons"
-          ><i class="fa-solid fa-bookmark icon"></i
-        ></span>
+          ><i class="fa-solid fa-list"></i></span>
         <span class="text">Oders</span>
       </router-link>
       <router-link v-if="isLogin" to="/profile" class="button">

@@ -10,10 +10,12 @@
               <div class="col-lg-4">
                 <div class="card mb-4">
                   <div class="card-body text-center">
+                    <!-- :src="'http://localhost:3000/' + data.Avatar" -->
                     <img
                         v-if="data.Avatar != null"
-                        :src="'http://localhost:3000/' + data.Avatar"
-                        alt="Generic placeholder image"
+                        :src="imageUploadEdit"
+                        
+                        alt="Generic placeholder image avatar"
                         class="img-fluid img-thumbnail mt-4 mb-2"
                         style="width: 150px; z-index: 1"
                       />
@@ -137,7 +139,7 @@
         birth.value = res.data.NgaySinh;
         phone.value = res.data.DienThoai;
         address.value = res.data.DiaChi;
-        imageUploadEdit.value = `http://localhost:3000/${res.data.avatar}`;
+        imageUploadEdit.value = `http://localhost:3000/${res.data.Avatar}`;
       })
       .catch((err) => console.log(err));
   };
@@ -162,9 +164,13 @@
         if (res.data.error) {
           toast.error(res.data.error);
         } else if (res.data.message) {
+  const Avatar = res.data.data.Avatar;
+
             data.value = res.data;
             toast.success(res.data.message);
             console.log(data.value)
+            localStorage.setItem("AvatarDG",Avatar)
+
           fetchData();
         }
       })
