@@ -1,0 +1,46 @@
+.containPage {
+    padding: 20px 30px;
+
+    .contentPage {
+        padding: 0px 20px 20px 20px;
+        border-radius: 10px;
+        background-color: #eae2e24a;
+    }
+
+
+
+}
+.action_group{
+    display: flex;
+    gap: 15px;
+}
+.rightModal {
+    .groupForm {
+      display: grid;
+      grid-template-columns: 94px auto;
+      padding: 5px 10px;
+      border-radius: 10px;
+      background-color: #fff;
+      color: #141a46;
+      margin: 10px;
+      border-bottom: 1px solid #000;
+      select{
+        border: none;
+      }
+      span {
+        margin: 5px 0px;
+      }
+  
+      .inputGroup {
+        border: none;
+        outline: none;
+        background-color: transparent;
+        padding: 0px 5px;
+      }
+  
+      .inputGroup::placeholder {
+        color: rgba(255, 255, 255, 0.815);
+      }
+    }
+}
+

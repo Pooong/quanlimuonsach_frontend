@@ -1,5 +1,5 @@
 .containPage {
-    padding: 20px 30px;
+    // padding: 20px 30px;
     height: 70vh;
   
     .titleWeb {
@@ -16,9 +16,7 @@
     background-color: #eae2e24a;
   }
   
-  .titleIntro {
-    font-weight: bold;
-  }
+
   
   .btnReadMore {
     background-image: linear-gradient(
@@ -59,5 +57,50 @@
         position: relative;
         border-radius: 40px;
       }
+    }
+  }
+  .img_item{
+    position: absolute;
+    background-color: transparent;
+    width: 100%;
+    height: 560px;
+  }
+  .banner{
+    padding: 0;
+    position: relative;
+    height: 560px;
+    animation:faded 0.5s ease ;
+    transition: .4s;
+  }
+  .titleIntro {
+    font-weight: bold;
+    color: #fff;
+    transition:linear .5s;
+    // animation: fadeIn 0.5s ease;
+  }
+  .titlePage{
+    color: #fff;
+    // animation: fadeIn 0.5s ease;
+  }
+  .wrap-banner{
+    padding: 0;
+    position: absolute;
+  }
+  @keyframes faded{
+    0%{
+      opacity: 0.4;
+    }
+    100%{
+      opacity: 1;
+    }
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      margin-bottom: 100px;
+    }
+    to {
+      opacity: 1;
+      margin-bottom: 5px;
     }
   }

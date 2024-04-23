@@ -5,21 +5,30 @@
   
         <span class="titleWeb">F<span class="text-dark">Books</span></span>
       </div>
+      <div class="menu-toggle-wrap">
+      <button class="menu-toggle" @click="ToggleMenu">
+        <span class="material-icons"
+          ><i class="fa-solid fa-leaf"></i></span>
+      </button>
+    </div>
       <h3>Menu</h3>
       <div class="menu">
         <router-link to="/admin/home" class="button">
           <span class="material-icons"
-            ><i class="fa-solid fa-house icon"></i
-          ></span>
+            ><i class="fa-solid fa-mug-hot"></i></span>
           <span class="text">Home</span>
         </router-link>
         <router-link to="/admin/about" class="button">
           <span class="material-icons"><i class="fa-solid fa-book"></i></span>
           <span class="text">List Book</span>
         </router-link>
+        <router-link to="/admin/publisher" class="button">
+          <span class="material-icons"><i class="fa-solid fa-building"></i></span>
+          <span class="text">Publisher</span>
+        </router-link>
         <router-link to="/admin/customer" class="button">
           <span class="material-icons"><i class="fa-solid fa-users"></i></span>
-          <span class="text">Readers</span>
+          <span class="text">Users</span>
         </router-link>
         <router-link to="/admin/history" class="button">
           <span class="material-icons"><i class="fa-solid fa-clock"></i></span>
@@ -67,7 +76,7 @@
   const isLogin = localStorage.getItem("isLogin");
   const is_expanded = ref(localStorage.getItem("is_expanded") === "true");
   const ToggleMenu = () => {
-    is_expanded.value = !is_expanded.value;
+    is_expanded.value = is_expanded.value;
     localStorage.setItem("is_expanded", is_expanded.value);
   };
   // Modal andt vue

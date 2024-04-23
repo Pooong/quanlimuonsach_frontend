@@ -8,8 +8,7 @@
     <div class="menu-toggle-wrap">
       <button class="menu-toggle" @click="ToggleMenu">
         <span class="material-icons"
-          ><i class="fa-solid fa-angles-right fa-xs"></i
-        ></span>
+          ><i class="fa-solid fa-leaf"></i></span>
       </button>
     </div>
 
@@ -75,7 +74,7 @@ const isLogin = localStorage.getItem("isLoginDG");
 const is_expanded = ref(localStorage.getItem("is_expanded") === "true");
 
 const ToggleMenu = () => {
-  is_expanded.value = !is_expanded.value;
+  is_expanded.value = true;
   localStorage.setItem("is_expanded", is_expanded.value);
 };
 

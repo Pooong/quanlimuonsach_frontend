@@ -1,6 +1,6 @@
 <template>
     <div class="app">
-      <div class="d-block w-100">
+      <div class="d-block w-100" >
         <AuthHeader />
         <router-view />
       </div>

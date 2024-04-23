@@ -3,7 +3,8 @@
       <SideBar />
       <div class="d-block w-100">
         <AppHeader />
-        <div class="scrollable"><router-view /></div>
+        <div class="scrollable" ><router-view /></div>
+        
       </div>
     </div>
 </template>

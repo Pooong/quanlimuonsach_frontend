@@ -9,6 +9,8 @@ aside {
     padding: 1rem;
     background-color: #07f4c4;
     transition: 0.2s ease-in-out;
+    height: 100vh;
+    position: fixed;
     .flex {
       flex: 1 1 0%;
     }
@@ -26,7 +28,7 @@ aside {
         transition: opacity 0.3s ease-in-out;
         position: absolute;
         font-size: 20px;
-        color: var(--purple);
+        color: #000;
         font-weight: bold;
       }
     }
@@ -159,7 +161,7 @@ aside {
   
       .titleWeb {
         opacity: 1;
-        color: #07f4c4;
+        color: #fff;
       }
   
       .button {

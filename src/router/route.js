@@ -14,6 +14,7 @@ import EditProfileAdmin from "@/views/EditProfileAdmin/EditProfileAdmin.vue";
 import Customer from "@/views/Customer/Customer.vue";
 import DefaultLayout from "@/Layouts/DefaultLayout/DefaultLayout.vue";
 import HistoryAdmin from "@/views/HistoryAdmin/HistoryAdmin.vue";
+import PublisherAdmin from "@/views/PublisherAdmin/PublisherAdmin.vue";
 import AuthLayoutAdmin from "@/Layouts/AuthLayoutAdmin/AuthLayoutAdmin.vue";
 // import user
 import About from "@/views/User/About/About.vue";
@@ -28,6 +29,13 @@ const routes = [
   {
     path: "/admin/home",
     component: Admin,
+    meta: {
+      layout: AdminLayout,
+    },
+  },
+  {
+    path: "/admin/publisher",
+    component: PublisherAdmin,
     meta: {
       layout: AdminLayout,
     },

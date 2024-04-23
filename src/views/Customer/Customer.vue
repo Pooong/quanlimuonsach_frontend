@@ -6,11 +6,18 @@
         <a-tab-pane key="1" tab="Độc giả">
           <h4>Danh sách độc giả</h4>
           <a-table :dataSource="data" :columns="columns" rowKey="_id">
+             <!-- Slot cho cột cuối cùng -->
+          <template  #action="{ record }" >
+              <span class="action_group">
+                <a class="text-danger" @click="handleDelete(record)">Xóa</a>
+              </span>
+          </template>
           </a-table>
         </a-tab-pane>
         <a-tab-pane key="2" tab="Nhân viên" force-render>
           <h4>Danh sách nhân viên</h4>
           <a-table :dataSource="dataStaff" :columns="columnsStaff" rowKey="_id">
+         
           </a-table>
         </a-tab-pane>
       </a-tabs>
@@ -19,16 +26,41 @@
   <div v-else class="denied">
     <h3 class="text-center mt-5">Vui lòng đăng nhập để xử dụng dịch vụ</h3>
   </div>
+
+
+    <!-- Modal Delete NXB -->
+    <a-modal
+        style="top: 40px"
+        v-model:open="isModalDelete"
+        title="Xóa sách"
+        @ok="handleOkDelete"
+        @cancel="handleCancelDelete"
+        :ok-button-props="okButtonProps"
+        okText="Xác nhận"
+        okType= 'danger',
+        cancelText="Đóng"
+      >
+        <p>Bạn có chắc muốn xóa NXB này ?</p>
+      </a-modal>
+
 </template>
 
 <script setup>
 import { ref } from "vue";
 import axios from "axios";
+import { toast } from "vue3-toastify";
 
 const activeKey = ref("1");
 const data = ref([]);
 const dataStaff = ref([]);
-
+const isModalDelete = ref(false);
+const idDelete = ref("");
+const showModalDelete = () => {
+    isModalDelete.value = true;
+  };
+const handleCancelDelete = () => {
+    isModalDelete.value = false;
+  };
 const isLogin = localStorage.getItem("isLogin");
 
 const columns = [
@@ -62,6 +94,13 @@ const columns = [
     dataIndex: "DiaChi",
     key: "DiaChi",
   },
+  {
+    title: 'Action',
+    key: 'action',
+    slots: {
+      customRender: 'action',
+    },
+  },
 ];
 
 const columnsStaff = [
@@ -90,6 +129,7 @@ const columnsStaff = [
     dataIndex: "DiaChi",
     key: "DiaChi",
   },
+
 ];
 
 const fetchData = () => {
@@ -112,6 +152,27 @@ const fetchDataStaff = () => {
 
 fetchData();
 fetchDataStaff();
+const handleDelete = (record) => {
+  idDelete.value = record._id
+  console.log(idDelete.value);
+  showModalDelete();
+};
+
+const handleOkDelete = () => {
+  const id = idDelete.value;
+  axios
+    .delete("http://localhost:3000/authentication/delete/" + id)
+    .then((res) => {
+        if (res.data.error) {
+          toast.error(res.data.error);
+        } else if (res.data.message) {
+          toast.success(res.data.message);
+          fetchData();
+
+        }
+      })
+      .catch((err) => console.log(err));
+}
 </script>
 
 <style lang="scss" scoped>

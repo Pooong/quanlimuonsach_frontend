@@ -1,7 +1,7 @@
 <template>
     <div class="app">
       <SideBarAdmin />
-      <div class="d-block w-100">
+      <div class="d-block w-100" style="padding-left: 230px;">
         <AppHeaderAdmin />
         <router-view />
       </div>
